@@ -22,6 +22,21 @@ public class Server {
             Thread t = new Handler(socket);
             t.start();
 
+            new Thread(()-> {
+                // close the socket after 5s
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+
 
             Thread shutdownHook = new Thread(() -> {
                 try {
